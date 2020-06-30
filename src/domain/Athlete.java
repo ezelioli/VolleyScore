@@ -1,11 +1,13 @@
 package domain;
 
+import java.time.LocalDate;
+
 public abstract class Athlete extends Person{
 	private int number;
 	private String role;
 	
-	public Athlete(String name, String surname, int age, String nationality, int number, String role) {
-		super(name, surname, age, nationality);
+	public Athlete(String name, String surname, LocalDate birthday, String nationality, int number, String role) {
+		super(name, surname, birthday, nationality);
 		this.number = number;
 		this.role = role;
 	}

@@ -1,22 +1,24 @@
 package domain;
 
+import java.time.LocalDate;
+
 public class Coach extends Person{
     private String level;
     private Team team;
 
-    public Coach(String name, String surname, int age, String nationality){
-        super(name, surname, age, nationality);
+    public Coach(String name, String surname, LocalDate birthday, String nationality){
+        super(name, surname, birthday, nationality);
         level = "basic";
     }
 
-    public Coach(String name, String surname, int age, String nationality, String level, Team team){
-        super(name, surname, age, nationality);
+    public Coach(String name, String surname, LocalDate birthday, String nationality, String level, Team team){
+        super(name, surname, birthday, nationality);
         this.level = level;
         this.team = team;
     }
 
-    public Coach(String name, String surname, int age, String nationality, Team team){
-        super(name, surname, age, nationality);
+    public Coach(String name, String surname, LocalDate birthday, String nationality, Team team){
+        super(name, surname, birthday, nationality);
         this.level = "basic";
         this.team = team;
     }

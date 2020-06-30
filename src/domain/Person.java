@@ -1,15 +1,17 @@
 package domain;
 
+import java.time.LocalDate;
+
 public abstract class Person {
     private String name;
     private String surname;
-    private int age;
+    private LocalDate birthday;
     private String nationality;
 
-    public Person(String name, String surname, int age, String nationality){
+    public Person(String name, String surname, LocalDate birthday, String nationality){
         this.name = name;
         this.surname = surname;
-        this.age = age;
+        this.birthday = birthday;
         this.nationality = nationality;
     }
 
@@ -21,8 +23,8 @@ public abstract class Person {
         this.surname = surname;
     }
 
-    public void setAge(int age){
-        this.age = age;
+    public void setBirthday(LocalDate birthday){
+        this.birthday = birthday;
     }
 
     public void setNationality(String nationality){
@@ -37,8 +39,8 @@ public abstract class Person {
         return surname;
     }
 
-    public int getAge(){
-        return age;
+    public LocalDate getBirthday(){
+        return birthday;
     }
 
     public String getNationality(){
@@ -46,6 +48,6 @@ public abstract class Person {
     }
 
     public String toString(){
-        return "Person [name: " + name + ", surname: " + surname + ", age: " + age + ", nationality: " + nationality + "]";
+        return "Person [name: " + name + ", surname: " + surname + ", birthday: " + birthday + ", nationality: " + nationality + "]";
     }
 }

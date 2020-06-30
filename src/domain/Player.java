@@ -1,5 +1,6 @@
 package domain;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public abstract class Player extends Athlete{
@@ -7,8 +8,8 @@ public abstract class Player extends Athlete{
     private ArrayList<Grade> receptions;
     private ArrayList<Grade> serves;
 
-    public Player(String name, String surname, int age, String nationality, int number, String role){
-        super(name, surname, age, nationality, number, role);
+    public Player(String name, String surname, LocalDate birthday, String nationality, int number, String role){
+        super(name, surname, birthday, nationality, number, role);
         attacks = new ArrayList<Grade>();
         receptions = new ArrayList<Grade>();
         serves = new ArrayList<Grade>();
