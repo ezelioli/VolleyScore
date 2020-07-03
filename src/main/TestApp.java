@@ -7,6 +7,7 @@ import db.DBAccessManager;
 import domain.*;
 import domain.roles.*;
 import exceptions.DatabaseException;
+import gui.menu.MainMenu;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -34,6 +35,9 @@ public class TestApp {
 				for(Team team : provaTeams){
 					System.out.println(team.getName());
 				}
+
+				MainMenu mainMenu = new MainMenu();
+				mainMenu.setVisible(true);
 
 			}
 
