@@ -1,5 +1,5 @@
 *.idea
 *.iml
-data/
+data/*.db
 lib/
 out/
