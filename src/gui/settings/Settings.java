@@ -17,7 +17,7 @@ public class Settings extends JDialog implements ActionListener {
 
     public Settings(JFrame frame){
         super(frame, title);
-        initFrame();
+        initDialog();
 
         mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(BACKGROUND);
@@ -45,15 +45,18 @@ public class Settings extends JDialog implements ActionListener {
         centerPanel.add(liberoAllowedCheckBox, 1);
 
         cancelBtn = new SettingsButton("Cancel");
+        cancelBtn.addActionListener(this);
         saveBtn = new SettingsButton("Save");
+        saveBtn.addActionListener(this);
         southPanel.add(cancelBtn);
         southPanel.add(saveBtn);
     }
 
-    private void initFrame(){
+    private void initDialog(){
         setResizable(false);
+        setModal(true);
         setIconImage(new ImageIcon("data/images/settings_black.png").getImage());
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setBounds(100, 100, 800, 400);
         setSize(800, 400);
         Dimension windowSize = getSize();
@@ -67,10 +70,13 @@ public class Settings extends JDialog implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == cancelBtn){
-            this.dispose();
+            //int answer = JOptionPane.showConfirmDialog(this, "Quit settings without saving?",
+            //        "Warning", JOptionPane.OK_CANCEL_OPTION);
+            ConfirmDialog confirmDialog = new ConfirmDialog(this);
+            confirmDialog.setVisible(true);
         }else if(e.getSource() == saveBtn){
             //TODO: implement saving settings
-            this.dispose();
+            dispose();
         }
     }
 }
