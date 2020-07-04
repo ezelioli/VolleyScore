@@ -3,3 +3,4 @@
 data/*.db
 lib/
 out/
+settings.xml
