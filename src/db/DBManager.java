@@ -28,8 +28,7 @@ public class DBManager {
 		connected = true;
 		connection = DriverManager.getConnection(JDBCURL);
 		statement = connection.createStatement();
-		statement.setQueryTimeout(30); 
-		showMetadata();
+		statement.setQueryTimeout(30);
 		}
 		catch(SQLException e) {
 			System.out.println("Errore nella connessione al DB");
