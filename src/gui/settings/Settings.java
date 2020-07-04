@@ -1,5 +1,7 @@
 package gui.settings;
 
+import exceptions.PropertiesFileNotFoundException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,13 +13,21 @@ public class Settings extends JDialog implements ActionListener {
     private static final Color BACKGROUND = new Color(60, 63, 65);
     private static final Color FOREGROUND = new Color(174, 176, 179);
 
+    private AppProperties properties;
+    private JCheckBox darkThemeCheckBox;
+    private JCheckBox liberoAllowedCheckBox;
+
     private JPanel mainPanel;
     private JButton cancelBtn;
     private JButton saveBtn;
 
+    private boolean darkThemeSelected;
+    private boolean liberoSelected;
+
     public Settings(JFrame frame){
         super(frame, title);
         initDialog();
+        loadProperties();
 
         mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(BACKGROUND);
@@ -32,14 +42,16 @@ public class Settings extends JDialog implements ActionListener {
         centerPanel.setBackground(BACKGROUND);
         mainPanel.add(centerPanel, BorderLayout.CENTER);
 
-        JCheckBox darkThemeCheckBox = new JCheckBox("dark theme");
-        darkThemeCheckBox.setSelected(true);
+        darkThemeCheckBox = new JCheckBox("dark theme");
+        if(darkThemeSelected)
+            darkThemeCheckBox.setSelected(true);
         darkThemeCheckBox.setBackground(BACKGROUND);
         darkThemeCheckBox.setForeground(FOREGROUND);
         centerPanel.add(darkThemeCheckBox, 0);
 
-        JCheckBox liberoAllowedCheckBox = new JCheckBox("use libero");
-        liberoAllowedCheckBox.setSelected(true);
+        liberoAllowedCheckBox = new JCheckBox("use libero");
+        if(liberoSelected)
+            liberoAllowedCheckBox.setSelected(true);
         liberoAllowedCheckBox.setBackground(BACKGROUND);
         liberoAllowedCheckBox.setForeground(FOREGROUND);
         centerPanel.add(liberoAllowedCheckBox, 1);
@@ -67,15 +79,49 @@ public class Settings extends JDialog implements ActionListener {
         setLocation(dx, dy);
     }
 
+    private void loadProperties(){
+        try {
+            properties = AppProperties.getInstance();
+            darkThemeSelected = "dark".equals(properties.getProperty("theme"));
+            liberoSelected = "true".equals(properties.getProperty("libero"));
+        }catch(Exception exception){
+            System.out.println(exception.getMessage());
+            darkThemeSelected = false;
+            liberoSelected = false;
+        }
+    }
+
+    private void saveProperties(){
+        if(properties == null){
+            return;
+        }
+
+        if(darkThemeCheckBox.isSelected()){
+            properties.setProperty("theme", "dark");
+        }else{
+            properties.setProperty("theme", "ligth");
+        }
+        if(liberoAllowedCheckBox.isSelected()){
+            properties.setProperty("libero", "true");
+        }else{
+            properties.setProperty("libero", "false");
+        }
+
+        try {
+            properties.store();
+        }catch(PropertiesFileNotFoundException exception){
+            exception.getMessage();
+            //TODO: notify exception
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == cancelBtn){
-            //int answer = JOptionPane.showConfirmDialog(this, "Quit settings without saving?",
-            //        "Warning", JOptionPane.OK_CANCEL_OPTION);
             ConfirmDialog confirmDialog = new ConfirmDialog(this);
             confirmDialog.setVisible(true);
         }else if(e.getSource() == saveBtn){
-            //TODO: implement saving settings
+            saveProperties();
             dispose();
         }
     }
