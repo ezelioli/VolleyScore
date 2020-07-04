@@ -9,9 +9,13 @@ import exceptions.DatabaseException;
 import domain.*;
 
 public class DBAccessManager implements DatabaseAccess {
+
+	private static final String url = "data/VolleyScoreDatabase.db";
+	private static DBAccessManager uniqueInstance = null;
+
 	private DBManager db;
 	
-	public DBAccessManager(String url) throws DatabaseException{
+	private DBAccessManager() throws DatabaseException{
 		try {
 			this.db = new DBManager(DBManager.JDBCDriver, DBManager.JDBCURL + url);
 		}catch(SQLException e) {
@@ -19,6 +23,13 @@ public class DBAccessManager implements DatabaseAccess {
 		}catch(ClassNotFoundException e) {
 			throw new DatabaseException(e.getMessage());
 		}
+	}
+
+	public static DBAccessManager getInstance() throws DatabaseException{
+		if(uniqueInstance == null){
+			return new DBAccessManager();
+		}
+		return uniqueInstance;
 	}
 	
 	public boolean isConnected(){

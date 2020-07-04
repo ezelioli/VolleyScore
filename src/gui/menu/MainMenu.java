@@ -1,23 +1,34 @@
 package gui.menu;
 
+import gui.settings.Settings;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class MainMenu extends JFrame implements ActionListener {
+public class MainMenu extends JFrame implements ActionListener, MouseListener {
+
     private JPanel contentPane;
     private JButton btnQuit;
     private JButton btnNewGame;
     private JButton btnManage;
-    private JButton btnWiewStats;
+    private JButton btnStats;
+    private ImageIcon settingsBlack = new ImageIcon("data/images/settings_black.png");
+    private ImageIcon settingsWhite = new ImageIcon("data/images/settings_white.png");
+    private JLabel settingsLabel;
+
+    private static final Color BACKGROUND = new Color(60, 63, 65, 255);
 
     public MainMenu() {
+
         initFrame();
 
         contentPane = new JPanel();
-        contentPane.setBackground(new Color(112, 128, 144));
+        contentPane.setBackground(BACKGROUND);
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
@@ -27,48 +38,50 @@ public class MainMenu extends JFrame implements ActionListener {
         separator.setBounds(48, 78, 515, 5);
         contentPane.add(separator);
 
-        JLabel lblVolleyballScoreManager = new JLabel("VolleyBall Score Manager");
-        lblVolleyballScoreManager.setForeground(new Color(205, 133, 63));
-        lblVolleyballScoreManager.setFont(new Font("Tw Cen MT", Font.BOLD, 27));
-        lblVolleyballScoreManager.setHorizontalAlignment(SwingConstants.CENTER);
-        lblVolleyballScoreManager.setBounds(133, 25, 368, 31);
-        contentPane.add(lblVolleyballScoreManager);
+        JLabel lblVolleyScore = new JLabel("VolleyScore");
+        lblVolleyScore.setForeground(new Color(197, 83, 80));
+        lblVolleyScore.setFont(new Font("Tw Cen MT", Font.BOLD, 27));
+        lblVolleyScore.setHorizontalAlignment(SwingConstants.CENTER);
+        lblVolleyScore.setBounds(133, 25, 368, 31);
+        contentPane.add(lblVolleyScore);
 
-        Font font = new Font("Times New Roman", Font.PLAIN, 18);
-        Color foregroundColor = UIManager.getColor("Button.darkShadow");
-
-        btnNewGame = makeButton("New Game", 246, 149, 121, 31,
-                foregroundColor, new Color(192, 192, 192), font);
+        btnNewGame = new MenuButton("New Game", 246, 149);
+        btnNewGame.addActionListener(this);
         contentPane.add(btnNewGame);
 
-        btnManage = makeButton("Manage", 246, 229, 121, 31,
-                foregroundColor, Color.LIGHT_GRAY, font);
+        btnManage = new MenuButton("Manage", 246, 229);
+        btnManage.addActionListener(this);
         contentPane.add(btnManage);
 
-        btnWiewStats = makeButton("Wiew Stats", 246, 318, 121, 31,
-                foregroundColor, Color.LIGHT_GRAY, font);
-        contentPane.add(btnWiewStats);
+        btnStats = new MenuButton("Stats", 246, 318);
+        btnStats.addActionListener(this);
+        contentPane.add(btnStats);
 
-        btnQuit = makeButton("Quit", 246, 470, 121, 31,
-                foregroundColor, Color.LIGHT_GRAY, font);
+        btnQuit = new MenuButton("Quit", 246, 470);
+        btnQuit.addActionListener(this);
         contentPane.add(btnQuit);
 
-        JLabel settingsLabel = new JLabel();
-        settingsLabel.setIcon(new ImageIcon("data/images/settings.png"));
-        settingsLabel.setBounds(600, 542, 32, 32);
+        JComboBox<String> seasonsBox = new SeasonsBox(20, 470);
+        contentPane.add(seasonsBox);
+
+        settingsLabel = new JLabel();
+        settingsLabel.setIcon(settingsBlack);
+        settingsLabel.setBounds(580, 530, 32, 32);
+        settingsLabel.setBackground(BACKGROUND);
+        settingsLabel.addMouseListener(this);
         contentPane.add(settingsLabel);
 
-        JLabel lblPoweredByEnrico = new JLabel("Powered by Enrico Zelioli");
-        lblPoweredByEnrico.setBounds(20, 542, 142, 14);
+        JLabel lblPoweredByEnrico = new JLabel("Developed by Enrico Zelioli");
+        lblPoweredByEnrico.setBounds(20, 542, 160, 14);
+        lblPoweredByEnrico.setForeground(new Color(174, 176, 179));
         contentPane.add(lblPoweredByEnrico);
     }
 
     private void initFrame(){
         setResizable(false);
-        setTitle("VolleyBall Score Manager");
-        //setIconImage(Toolkit.getDefaultToolkit().getImage(MainMenu.class.getResource("../../data/images/volleyball.png")));
+        setTitle("VolleyScore");
+        setIconImage(new ImageIcon("data/images/volleyball.png").getImage());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 635, 610);
         setSize(635, 610);
         Dimension windowSize = getSize();
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -76,16 +89,6 @@ public class MainMenu extends JFrame implements ActionListener {
         int dx = centerPoint.x - windowSize.width / 2;
         int dy = centerPoint.y - windowSize.height / 2;
         setLocation(dx, dy);
-    }
-
-    private JButton makeButton(String text, int x, int y, int width, int heigth, Color foreground, Color background, Font font){
-        JButton button = new JButton(text);
-        button.setForeground(foreground);
-        button.setFont(font);
-        button.setBackground(background);
-        button.setBounds(x, y, width, heigth);
-        button.addActionListener(this);
-        return button;
     }
 
     @Override
@@ -101,9 +104,42 @@ public class MainMenu extends JFrame implements ActionListener {
             System.out.println("Manage teams dialog");
             // TODO: implement management functionality
         }
-        else if(e.getSource() == btnWiewStats) {
+        else if(e.getSource() == btnStats) {
             System.out.println("View stats");
             // TODO: implement scores visualization functionality
+        }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        if(e.getSource() == settingsLabel){
+            JDialog settingsDialog = new Settings(this);
+            settingsDialog.setVisible(true);
+            System.out.println("Settings"); //TODO: implement settings gui
+        }
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        if(e.getSource() == settingsLabel){
+            settingsLabel.setIcon(settingsWhite);
+        }
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        if(e.getSource() == settingsLabel){
+            settingsLabel.setIcon(settingsBlack);
         }
     }
 }

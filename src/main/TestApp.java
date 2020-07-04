@@ -15,12 +15,11 @@ import java.util.ArrayList;
 
 
 public class TestApp {
-	private static final String dburl = "data/VolleyScoreDatabase.db";
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				DatabaseAccess db = initDatabase(dburl);
+				DatabaseAccess db = initDatabase();
 				ArrayList<Championship> championships = new ArrayList<Championship>();
 				ArrayList<Team> provaTeams = new ArrayList<Team>();
 
@@ -41,9 +40,9 @@ public class TestApp {
 
 			}
 
-			public DatabaseAccess initDatabase(String url){
+			public DatabaseAccess initDatabase(){
 				try{
-					DatabaseAccess db = new DBAccessManager(dburl);
+					DatabaseAccess db = DBAccessManager.getInstance();
 					return db;
 				}catch(DatabaseException exception){
 					System.out.println(exception.getMessage());
