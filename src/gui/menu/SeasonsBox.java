@@ -16,6 +16,8 @@ public class SeasonsBox extends JComboBox<String> {
     private static final int WIDTH = 150;
     private static final int HEIGHT = 50;
 
+    public static final String NEW_SEASON_LABEL = "--New Season--";
+
     public SeasonsBox(int x, int y){
         super();
         setForeground(FOREGROUND);
@@ -24,6 +26,7 @@ public class SeasonsBox extends JComboBox<String> {
         setBounds(x, y, WIDTH, HEIGHT);
         setRenderer(new MenuListCellRenderer());
         loadSeasons();
+        addItem(NEW_SEASON_LABEL);
     }
 
     private void loadSeasons(){

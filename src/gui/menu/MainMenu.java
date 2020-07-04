@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Properties;
 
 public class MainMenu extends JFrame implements ActionListener, MouseListener {
 
@@ -17,9 +18,11 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
     private JButton btnNewGame;
     private JButton btnManage;
     private JButton btnStats;
+    private JComboBox<String> seasonsBox;
     private ImageIcon settingsBlack = new ImageIcon("data/images/settings_black.png");
     private ImageIcon settingsWhite = new ImageIcon("data/images/settings_white.png");
     private JLabel settingsLabel;
+    private Properties properties;
 
     private static final Color BACKGROUND = new Color(60, 63, 65, 255);
 
@@ -61,7 +64,8 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
         btnQuit.addActionListener(this);
         contentPane.add(btnQuit);
 
-        JComboBox<String> seasonsBox = new SeasonsBox(20, 470);
+        seasonsBox = new SeasonsBox(20, 470);
+        seasonsBox.addActionListener(this);
         contentPane.add(seasonsBox);
 
         settingsLabel = new JLabel();
@@ -107,6 +111,13 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
         else if(e.getSource() == btnStats) {
             System.out.println("View stats");
             // TODO: implement scores visualization functionality
+        }else if(e.getSource() == seasonsBox){
+            if(SeasonsBox.NEW_SEASON_LABEL.equals(seasonsBox.getSelectedItem())){
+                System.out.println("New Season");
+                SeasonsDialog seasonsDialog = new SeasonsDialog(this);
+                seasonsDialog.setVisible(true);
+                // TODO: implement new season dialog
+            }
         }
     }
 
@@ -125,7 +136,7 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
         if(e.getSource() == settingsLabel){
             JDialog settingsDialog = new Settings(this);
             settingsDialog.setVisible(true);
-            System.out.println("Settings"); //TODO: implement settings gui
+            //TODO: implement settings gui
         }
     }
 
