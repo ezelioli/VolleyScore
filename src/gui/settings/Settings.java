@@ -118,7 +118,7 @@ public class Settings extends JDialog implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == cancelBtn){
-            ConfirmDialog confirmDialog = new ConfirmDialog(this);
+            SettingsOkCancelDialog confirmDialog = new SettingsOkCancelDialog(this, "Quit settings without saving?");
             confirmDialog.setVisible(true);
         }else if(e.getSource() == saveBtn){
             saveProperties();
