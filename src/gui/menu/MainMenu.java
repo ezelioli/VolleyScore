@@ -1,5 +1,6 @@
 package gui.menu;
 
+import gui.management.TeamsManagment;
 import gui.menu.manageseason.SeasonsDialog;
 import gui.settings.Settings;
 
@@ -14,15 +15,14 @@ import java.util.Properties;
 
 public class MainMenu extends JFrame implements ActionListener, MouseListener {
 
-    private JPanel contentPane;
-    private JButton btnQuit;
-    private JButton btnNewGame;
-    private JButton btnManage;
-    private JButton btnStats;
-    private SeasonsBox seasonsBox;
-    private ImageIcon settingsBlack = new ImageIcon("data/images/settings_black.png");
-    private ImageIcon settingsWhite = new ImageIcon("data/images/settings_white.png");
-    private JLabel settingsLabel;
+    private final JButton btnQuit;
+    private final JButton btnNewGame;
+    private final JButton btnManage;
+    private final JButton btnStats;
+    private final SeasonsBox seasonsBox;
+    private final ImageIcon settingsBlack = new ImageIcon("data/images/settings_black.png");
+    private final ImageIcon settingsWhite = new ImageIcon("data/images/settings_white.png");
+    private final JLabel settingsLabel;
     private Properties properties;
 
     private static final Color BACKGROUND = new Color(60, 63, 65, 255);
@@ -31,7 +31,7 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
 
         initFrame();
 
-        contentPane = new JPanel();
+        JPanel contentPane = new JPanel();
         contentPane.setBackground(BACKGROUND);
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -112,6 +112,9 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
         else if(e.getSource() == btnManage) {
             System.out.println("Manage teams dialog");
             // TODO: implement management functionality
+            String selectedSeason = (String)seasonsBox.getSelectedItem();
+            TeamsManagment teamsManagment = new TeamsManagment(this, selectedSeason);
+            teamsManagment.setVisible(true);
         }
         else if(e.getSource() == btnStats) {
             System.out.println("View stats");
