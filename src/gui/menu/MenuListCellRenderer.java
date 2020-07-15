@@ -5,9 +5,9 @@ import java.awt.*;
 
 public class MenuListCellRenderer extends DefaultListCellRenderer {
 
-    private Color BACKGROUND_SELECTED = new Color(150, 78, 46);
-    private static final Color FOREGROUND = new Color(43, 43, 44);
-    private static final Color BACKGROUND = new Color(250, 148, 65, 255);
+    private Color BACKGROUND_SELECTED = new Color(107, 132, 189);
+    private static final Color FOREGROUND = new Color(174, 176, 179);
+    private static final Color BACKGROUND = new Color(74, 109, 175);
 
     public MenuListCellRenderer(){
         super();

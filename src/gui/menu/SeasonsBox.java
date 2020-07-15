@@ -3,10 +3,8 @@ package gui.menu;
 import db.DBAccessManager;
 import domain.Championship;
 import exceptions.DatabaseException;
-import gui.menu.MenuListCellRenderer;
 
 import javax.swing.*;
-import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -15,6 +13,8 @@ public class SeasonsBox extends JComboBox<String> {
     private static final Font FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 18);
     private static final int WIDTH = 170;
     private static final int HEIGHT = 50;
+    private static final Color FOREGROUND = new Color(174, 176, 179);
+    private static final Color BACKGROUND = new Color(74, 109, 175);
 
     public static final String MANAGE_SEASON_LABEL = "--Manage Seasons--";
 
@@ -22,6 +22,8 @@ public class SeasonsBox extends JComboBox<String> {
         super();
         setFont(FONT);
         setBounds(x, y, WIDTH, HEIGHT);
+        setBackground(BACKGROUND);
+        setForeground(FOREGROUND);
         setRenderer(new MenuListCellRenderer());
         loadSeasons();
     }

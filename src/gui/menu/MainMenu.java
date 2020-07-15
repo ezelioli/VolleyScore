@@ -61,23 +61,23 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
         btnStats.addActionListener(this);
         contentPane.add(btnStats);
 
-        btnQuit = new MenuButton("Quit", 246, 470);
+        btnQuit = new MenuButton("Quit", 246, 450);
         btnQuit.addActionListener(this);
         contentPane.add(btnQuit);
 
-        seasonsBox = new SeasonsBox(15, 465);
+        seasonsBox = new SeasonsBox(15, 490);
         seasonsBox.addActionListener(this);
         contentPane.add(seasonsBox);
 
         settingsLabel = new JLabel();
         settingsLabel.setIcon(settingsBlack);
-        settingsLabel.setBounds(580, 530, 32, 32);
+        settingsLabel.setBounds(580, 560, 32, 32);
         settingsLabel.setBackground(BACKGROUND);
         settingsLabel.addMouseListener(this);
         contentPane.add(settingsLabel);
 
         JLabel lblPoweredByEnrico = new JLabel("Developed by Enrico Zelioli");
-        lblPoweredByEnrico.setBounds(20, 542, 160, 14);
+        lblPoweredByEnrico.setBounds(20, 570, 160, 14);
         lblPoweredByEnrico.setForeground(new Color(174, 176, 179));
         contentPane.add(lblPoweredByEnrico);
     }
@@ -87,7 +87,7 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
         setTitle("VolleyScore");
         setIconImage(new ImageIcon("data/images/volleyball.png").getImage());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(635, 610);
+        setSize(635, 640);
         Dimension windowSize = getSize();
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         Point centerPoint = ge.getCenterPoint();
