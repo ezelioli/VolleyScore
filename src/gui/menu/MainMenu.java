@@ -1,5 +1,6 @@
 package gui.menu;
 
+import gui.menu.manageseason.SeasonsDialog;
 import gui.settings.Settings;
 
 import javax.swing.*;
@@ -18,7 +19,7 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
     private JButton btnNewGame;
     private JButton btnManage;
     private JButton btnStats;
-    private JComboBox<String> seasonsBox;
+    private SeasonsBox seasonsBox;
     private ImageIcon settingsBlack = new ImageIcon("data/images/settings_black.png");
     private ImageIcon settingsWhite = new ImageIcon("data/images/settings_white.png");
     private JLabel settingsLabel;
@@ -64,7 +65,7 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
         btnQuit.addActionListener(this);
         contentPane.add(btnQuit);
 
-        seasonsBox = new SeasonsBox(20, 470);
+        seasonsBox = new SeasonsBox(15, 465);
         seasonsBox.addActionListener(this);
         contentPane.add(seasonsBox);
 
@@ -95,6 +96,10 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
         setLocation(dx, dy);
     }
 
+    public void updateSeasonsBox(){
+        seasonsBox.loadSeasons();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btnQuit) {
@@ -112,11 +117,10 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
             System.out.println("View stats");
             // TODO: implement scores visualization functionality
         }else if(e.getSource() == seasonsBox){
-            if(SeasonsBox.NEW_SEASON_LABEL.equals(seasonsBox.getSelectedItem())){
-                System.out.println("New Season");
+            if(SeasonsBox.MANAGE_SEASON_LABEL.equals(seasonsBox.getSelectedItem())){
+                seasonsBox.transferFocusUpCycle();
                 SeasonsDialog seasonsDialog = new SeasonsDialog(this);
                 seasonsDialog.setVisible(true);
-                // TODO: implement new season dialog
             }
         }
     }
@@ -136,7 +140,6 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
         if(e.getSource() == settingsLabel){
             JDialog settingsDialog = new Settings(this);
             settingsDialog.setVisible(true);
-            //TODO: implement settings gui
         }
     }
 

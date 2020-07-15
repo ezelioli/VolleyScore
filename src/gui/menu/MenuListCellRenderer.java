@@ -5,7 +5,9 @@ import java.awt.*;
 
 public class MenuListCellRenderer extends DefaultListCellRenderer {
 
-    private Color BACKGROUND_SELECTED = new Color(146, 147, 149);
+    private Color BACKGROUND_SELECTED = new Color(150, 78, 46);
+    private static final Color FOREGROUND = new Color(43, 43, 44);
+    private static final Color BACKGROUND = new Color(250, 148, 65, 255);
 
     public MenuListCellRenderer(){
         super();
@@ -19,8 +21,12 @@ public class MenuListCellRenderer extends DefaultListCellRenderer {
         component.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         if(isSelected) {
             component.setBackground(BACKGROUND_SELECTED);
-            setBackground(BACKGROUND_SELECTED);
+            component.setForeground(FOREGROUND);
+        }else{
+            component.setBackground(BACKGROUND);
+            component.setForeground(FOREGROUND);
         }
         return component;
     }
+
 }

@@ -1,4 +1,4 @@
-package gui.menu.management;
+package gui.menu.manageseason;
 
 import db.DBAccessManager;
 import domain.Championship;
@@ -18,7 +18,6 @@ public class SeasonsDialog extends JDialog implements ActionListener {
     private static final Color BACKGROUND = new Color(60, 63, 65);
     private static final Color FOREGROUND = new Color(174, 176, 179);
     private static final Font TITLE_FONT = new Font("Times New Roman", Font.BOLD, 30);
-    private static final Font FONT = new Font("Times New Roman", Font.PLAIN, 18);
 
     private static final Color ADD_BACKGROUND = new Color(72, 155, 84);
     private static final Color ADD_FOREGROUND = new Color(255, 255, 255);
@@ -113,15 +112,13 @@ public class SeasonsDialog extends JDialog implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == addButton){
-            int rows = seasonsTable.getRowCount();
             seasonsTable.addRow("New Season");
-            seasonsTable.setRowSelectionInterval(rows, rows);
         }else if(e.getSource() == removeButton){
-            SeasonsConfirmDialog confirmDialog = new SeasonsConfirmDialog(this,
+            SeasonsOkCancelDialog confirmDialog = new SeasonsOkCancelDialog(this,
                     "Remove selected season?");
             confirmDialog.setVisible(true);
         }else if(e.getSource() == closeButton){
-            menu.updateSeasons();
+            menu.updateSeasonsBox();
             menu.validate();
             dispose();
         }
