@@ -1,4 +1,6 @@
-package gui.settings;
+package gui;
+
+import gui.ConfirmDialog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +25,7 @@ public class ConfirmPanel extends JPanel implements ActionListener {
     private JButton okBtn;
     private JButton cancelBtn;
 
-    public ConfirmPanel(ConfirmDialog owner){
+    public ConfirmPanel(ConfirmDialog owner, String message){
 
         super(null);
 
@@ -35,7 +37,7 @@ public class ConfirmPanel extends JPanel implements ActionListener {
         warningLabel.setBackground(BACKGROUND);
         add(warningLabel);
 
-        JLabel textLabel = new JLabel("Quit settings without saving?");
+        JLabel textLabel = new JLabel(message);
         int textLabelX = labelsX + warningLabel.getX() + 20;
         textLabel.setBounds(textLabelX, labelsY, labelsWidth, labelsHeight);
         textLabel.setForeground(BUTTON_BACKGROUND);
@@ -62,9 +64,9 @@ public class ConfirmPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == cancelBtn){
-            owner.dispose();
+            owner.doCancel();
         }else if(e.getSource() == okBtn){
-            owner.close();
+            owner.doOk();
         }
     }
 }

@@ -123,4 +123,24 @@ public class DBAccessManager implements DatabaseAccess {
 		}
 		return players;
 	}
+
+	@Override
+	public void removeChampionship(String name) throws DatabaseException {
+		try{
+			String query = "DELETE FROM championship WHERE name = \"" + name + "\";";
+			db.executeUpdate(query);
+		}catch(Exception exception){
+			throw new DatabaseException(exception.getMessage());
+		}
+	}
+
+	@Override
+	public void updateChampionship(String name, String newName) throws DatabaseException {
+		try{
+			String query = "UPDATE championship SET name = \"" + newName + "\" WHERE name = \"" + name + "\";";
+			db.executeUpdate(query);
+		}catch(Exception exception){
+			throw new DatabaseException(exception.getMessage());
+		}
+	}
 }

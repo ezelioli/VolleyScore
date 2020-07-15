@@ -19,4 +19,8 @@ public interface DatabaseAccess {
 
 	public ArrayList<PlayerInfo> loadPlayersOfTeam(Team team) throws DatabaseException;
 
+	public void removeChampionship(String name) throws DatabaseException;
+
+	public void updateChampionship(String name, String newName) throws DatabaseException;
+
 }

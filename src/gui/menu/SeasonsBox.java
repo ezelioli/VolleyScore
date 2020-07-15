@@ -1,8 +1,9 @@
-package gui.menu;
+package gui.menu.management;
 
 import db.DBAccessManager;
 import domain.Championship;
 import exceptions.DatabaseException;
+import gui.menu.MenuListCellRenderer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,11 +27,11 @@ public class SeasonsBox extends JComboBox<String> {
         setBounds(x, y, WIDTH, HEIGHT);
         setRenderer(new MenuListCellRenderer());
         loadSeasons();
-        addItem(NEW_SEASON_LABEL);
     }
 
-    private void loadSeasons(){
+    public void loadSeasons(){
         ArrayList<Championship> championships = new ArrayList<Championship>();
+        removeAll();
         try {
             DBAccessManager db = DBAccessManager.getInstance();
             championships = db.loadChampionships();
@@ -40,5 +41,6 @@ public class SeasonsBox extends JComboBox<String> {
         for(Championship championship : championships){
             this.addItem(championship.getName());
         }
+        addItem(NEW_SEASON_LABEL);
     }
 }

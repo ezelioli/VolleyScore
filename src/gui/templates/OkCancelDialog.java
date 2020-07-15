@@ -1,14 +1,14 @@
-package gui.settings;
+package gui;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class ConfirmDialog extends JDialog {
+public class ConfirmDialog extends JDialog implements OkCancelDialog{
 
     private ImageIcon warningIcon = new ImageIcon("data/images/warning.png");
-    private JDialog owner;
+    protected JDialog owner;
 
-    public ConfirmDialog(JDialog owner){
+    public ConfirmDialog(JDialog owner, String message){
         super(owner);
         setResizable(false);
         setModal(true);
@@ -23,14 +23,19 @@ public class ConfirmDialog extends JDialog {
         setLocation(dx, dy);
         setTitle("Warning");
 
-        JPanel confirmPanel = new ConfirmPanel(this);
+        ConfirmPanel confirmPanel = new ConfirmPanel(this, message);
         setContentPane(confirmPanel);
 
         this.owner = owner;
     }
 
-    protected void close(){
-        this.dispose();
-        owner.dispose();
+    @Override
+    public void doCancel() {
+        dispose();
+    }
+
+    @Override
+    public void doOk() {
+        dispose();
     }
 }
