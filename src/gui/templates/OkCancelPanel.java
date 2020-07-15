@@ -1,17 +1,16 @@
-package gui;
-
-import gui.ConfirmDialog;
+package gui.templates;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ConfirmPanel extends JPanel implements ActionListener {
+public class OkCancelPanel extends JPanel implements ActionListener {
 
     private static final Color BACKGROUND = new Color(60, 63, 65);
     private static final Color BUTTON_BACKGROUND = new Color(174, 176, 179);
     private ImageIcon warningIcon = new ImageIcon("data/images/warning.png");
+
     private static int labelsY = 30;
     private static int labelsX = 20;
     private static int labelsWidth = 170;
@@ -21,11 +20,11 @@ public class ConfirmPanel extends JPanel implements ActionListener {
     private static int buttonsWidth = 80;
     private static int buttonsHeight = 20;
 
-    private ConfirmDialog owner;
+    private OkCancelDialog owner;
     private JButton okBtn;
     private JButton cancelBtn;
 
-    public ConfirmPanel(ConfirmDialog owner, String message){
+    public OkCancelPanel(OkCancelDialog owner, String message){
 
         super(null);
 
