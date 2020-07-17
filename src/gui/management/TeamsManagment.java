@@ -21,7 +21,9 @@ public class TeamsManagment extends JDialog {
 
         initDialog();
 
-        TeamsPanel mainPanel = new TeamsPanel(season);
+        loadChampionships(season);
+
+        TeamsPanel mainPanel = new TeamsPanel(season, teams);
         setContentPane(mainPanel);
     }
 
@@ -31,8 +33,8 @@ public class TeamsManagment extends JDialog {
         setTitle("Teams Managment");
         setIconImage(icon);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(700, 500);
-        Dimension windowSize = getSize();
+        Dimension windowSize = new Dimension(700, 500);
+        setSize(windowSize);
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         Point centerPoint = ge.getCenterPoint();
         int dx = centerPoint.x - windowSize.width / 2;

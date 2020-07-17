@@ -44,7 +44,7 @@ public class MainMenu extends JFrame implements ActionListener, MouseListener {
 
         JLabel lblVolleyScore = new JLabel("VolleyScore");
         lblVolleyScore.setForeground(new Color(197, 83, 80));
-        lblVolleyScore.setFont(new Font("Tw Cen MT", Font.BOLD, 27));
+        lblVolleyScore.setFont(new Font("Tw Cen MT", Font.BOLD, 35));
         lblVolleyScore.setHorizontalAlignment(SwingConstants.CENTER);
         lblVolleyScore.setBounds(133, 25, 368, 31);
         contentPane.add(lblVolleyScore);

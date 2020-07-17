@@ -7,12 +7,15 @@ import java.awt.event.MouseListener;
 
 public class MenuButton extends JButton implements MouseListener {
 
-    private static final Color FOREGROUND = new Color(174, 176, 179);
-    private static final Color BACKGROUND = new Color(74, 109, 175);
-    private static final Color SELECTED_BACKGROUND = new Color(107, 132, 189);
-    private static final Font FONT = new Font("Times New Roman", Font.PLAIN, 20);
-    private static final int WIDTH = 140;
-    private static final int HEIGHT = 35;
+    private final Color FOREGROUND = new Color(60, 63, 65);
+    private final Color BACKGROUND = new Color(197, 83, 80);
+    private final Color SELECTED_BACKGROUND = new Color(215, 111, 120);
+    private final Font FONT = new Font("Comic Sans MS", Font.PLAIN, 20);
+    private final int WIDTH = 140;
+    private final int HEIGHT = 35;
+
+    private final Color BLUE = new Color(74, 109, 175);
+    private final Color LIGTH_BLUE = new Color(107, 132, 189);
 
     public MenuButton(String title, int x, int y){
         super(title);
