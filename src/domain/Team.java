@@ -25,4 +25,11 @@ public class Team {
 		this.name = name;
 	}
 
+	public Coach getHeadCoach() {
+		return headCoach;
+	}
+
+	public Coach getAssistantCoach() {
+		return assistantCoach;
+	}
 }

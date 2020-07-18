@@ -32,11 +32,11 @@ public abstract class Person {
     }
 
     public String getName(){
-        return name;
+        return name == null ? " " : name;
     }
 
     public String getSurname(){
-        return surname;
+        return surname == null ? " " : surname;
     }
 
     public LocalDate getBirthday(){

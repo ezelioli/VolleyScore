@@ -3,32 +3,32 @@ package domain;
 import java.time.LocalDate;
 
 public class Coach extends Person{
-    private String level;
+    private String role;
     private Team team;
 
     public Coach(String name, String surname, LocalDate birthday, String nationality){
         super(name, surname, birthday, nationality);
-        level = "basic";
+        role = "head";
     }
 
-    public Coach(String name, String surname, LocalDate birthday, String nationality, String level, Team team){
+    public Coach(String name, String surname, LocalDate birthday, String nationality, String role){
         super(name, surname, birthday, nationality);
-        this.level = level;
-        this.team = team;
+        this.role = role;
+        this.team = null;
     }
 
     public Coach(String name, String surname, LocalDate birthday, String nationality, Team team){
         super(name, surname, birthday, nationality);
-        this.level = "basic";
+        this.role = "head";
         this.team = team;
     }
 
-    public void setLevel(String level) {
-        this.level = level;
+    public void setRole(String role) {
+        this.role = role;
     }
 
-    public String getLevel() {
-        return level;
+    public String getRole() {
+        return role;
     }
 
     public Team getTeam() {
@@ -41,6 +41,6 @@ public class Coach extends Person{
 
     @Override
     public String toString() {
-        return "Coach{" + "level='" + level + '\'' + '}';
+        return "Coach{" + "level='" + role + '\'' + '}';
     }
 }
