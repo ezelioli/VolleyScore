@@ -140,7 +140,8 @@ public class DBAccessManager implements DatabaseAccess {
 			while(rs.next()){
 				String playerName = rs.getString(1);
 				String playerSurname = rs.getString(2);
-				LocalDate playerBirthday = rs.getDate(3).toLocalDate();
+				String date = rs.getString(3);
+				LocalDate playerBirthday = LocalDate.parse(date);
 				String playerNationality = rs.getString(4);
 				int playerNumber = rs.getInt(5);
 				String playerRole = rs.getString(6);

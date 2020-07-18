@@ -1,7 +1,5 @@
 package gui.management.players;
 
-import domain.PlayerInfo;
-
 import javax.swing.*;
 import java.awt.*;
 

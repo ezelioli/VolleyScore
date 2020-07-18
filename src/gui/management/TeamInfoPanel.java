@@ -35,14 +35,23 @@ public class TeamInfoPanel extends JPanel implements MouseListener {
         teamIconLabel.setSize(64, 64);
         teamIconLabel.setIcon(defaultBadge);
 
+        FlowLayout teamIconLayout = new FlowLayout();
+        teamIconLayout.setHgap(10);
+        teamIconLayout.setAlignment(FlowLayout.CENTER);
+        JPanel teamIconPanel = new JPanel(teamIconLayout);
+        teamIconPanel.setBackground(BACKGROUND);
+        teamIconPanel.add(teamIconLabel);
+
         JLabel teamNameLabel = new JLabel("Team name:");
         teamNameLabel.setForeground(FOREGROUND);
         JTextField teamNameTxt = new JTextField(team.getName());
-        teamNameTxt.setPreferredSize(new Dimension(330, 30));
+        teamNameTxt.setPreferredSize(new Dimension(340, 30));
         teamNameTxt.setFont(FONT);
         teamNameTxt.setHorizontalAlignment(JLabel.CENTER);
 
-        JPanel teamNamePanel = new JPanel();
+        FlowLayout teamNameLayout = new FlowLayout();
+        teamNameLayout.setVgap(10);
+        JPanel teamNamePanel = new JPanel(teamNameLayout);
         teamNamePanel.setBackground(BACKGROUND);
         teamNamePanel.add(teamNameLabel);
         teamNamePanel.add(teamNameTxt);
@@ -55,9 +64,11 @@ public class TeamInfoPanel extends JPanel implements MouseListener {
             headCoachName = team.getHeadCoach().getName() + " " + team.getHeadCoach().getSurname();
         }
         JTextField headCoachTxt = new JTextField(headCoachName);
-        Dimension coachTxtDimension = new Dimension(100, 20);
+        Dimension coachTxtDimension = new Dimension(110, 20);
         headCoachTxt.setPreferredSize(coachTxtDimension);
         headCoachTxt.setEditable(false);
+        headCoachTxt.setBackground(FOREGROUND);
+        headCoachTxt.setForeground(MOUSEOVER_BACKGROUND);
 
         JLabel editHeadCoachLabel = new JLabel();
         editHeadCoachLabel.setSize(24, 24);
@@ -79,6 +90,8 @@ public class TeamInfoPanel extends JPanel implements MouseListener {
         JTextField assistantCoachTxt = new JTextField(assistantCoachName);
         assistantCoachTxt.setPreferredSize(coachTxtDimension);
         assistantCoachTxt.setEditable(false);
+        assistantCoachTxt.setBackground(FOREGROUND);
+        assistantCoachTxt.setForeground(MOUSEOVER_BACKGROUND);
 
         JLabel editAssistantCoachLabel = new JLabel();
         editAssistantCoachLabel.setSize(24, 24);
@@ -92,6 +105,7 @@ public class TeamInfoPanel extends JPanel implements MouseListener {
 
         FlowLayout coachPanelLayout = new FlowLayout();
         coachPanelLayout.setHgap(10);
+        coachPanelLayout.setVgap(5);
 
         JPanel coachPanel = new JPanel(coachPanelLayout);
         coachPanel.setBackground(BACKGROUND);
@@ -109,7 +123,7 @@ public class TeamInfoPanel extends JPanel implements MouseListener {
 
         JPanel northPanel = new JPanel(new BorderLayout());
         northPanel.setBackground(BACKGROUND);
-        northPanel.add(teamIconLabel, BorderLayout.WEST);
+        northPanel.add(teamIconPanel, BorderLayout.WEST);
         northPanel.add(textPanel, BorderLayout.CENTER);
 
         JPanel leftPanel = new JPanel();

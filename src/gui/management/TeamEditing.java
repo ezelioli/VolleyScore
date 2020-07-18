@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class TeamEditing extends JDialog {
 
-    private Image icon = new ImageIcon("data/images/volleyball.png").getImage();
+    private Image icon = new ImageIcon("data/images/edit.png").getImage();
 
     public TeamEditing(JDialog owner, Team team){
 

@@ -36,7 +36,8 @@ public class PlayersListPanel extends JPanel implements MouseListener {
         setBackground(BACKGROUND);
         for(int i = 0; i < gridRows; ++i){
             if(i < players.size()){
-                JLabel playerName = new JLabel(players.get(i).getName());
+                String fullPlayerName = players.get(i).getName() + " " + players.get(i).getSurname().toUpperCase();
+                JLabel playerName = new JLabel(fullPlayerName);
                 playerName.setBackground(BACKGROUND);
                 playerName.setForeground(FOREGROUND);
                 playerName.setFont(FONT);
