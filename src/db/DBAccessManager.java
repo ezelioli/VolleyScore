@@ -1,5 +1,6 @@
 package db;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -91,8 +92,11 @@ public class DBAccessManager implements DatabaseAccess {
 		try {
 			String query = "SELECT name FROM team WHERE championship = \"" + championship.getName() + "\";";
 			ResultSet rs = db.executeQuery(query);
+			ArrayList<String> teamNames = new ArrayList<String>();
 			while(rs.next()){
-				String teamName = rs.getString(1);
+				teamNames.add(rs.getString(1));
+			}
+			for(String teamName : teamNames){
 				Coach headCoach = loadCoachOfTeam(teamName, "head");
 				Coach assistantCoach = loadCoachOfTeam(teamName, "assistant");
 				Team newTeam = new Team(teamName, headCoach, assistantCoach);
@@ -114,12 +118,13 @@ public class DBAccessManager implements DatabaseAccess {
 			if(rs.next()){
 				String coachName = rs.getString(1);
 				String coachSurname = rs.getString(2);
-				LocalDate coachBirthday = rs.getDate(3).toLocalDate();
+				String date = rs.getString(3);
+				LocalDate coachBirthday = LocalDate.parse(date);
 				String coachNationality = rs.getString(4);
 				coach = new Coach(coachName, coachSurname, coachBirthday, coachNationality, role);
 			}
 		}catch(SQLException e) {
-			System.out.println("loadCoachOfTeam generated DatabaseException");
+			System.out.println(e.getCause());
 			throw new DatabaseException(e.getMessage());
 		}
 		return coach;
