@@ -92,13 +92,37 @@ public class DBAccessManager implements DatabaseAccess {
 			String query = "SELECT name FROM team WHERE championship = \"" + championship.getName() + "\";";
 			ResultSet rs = db.executeQuery(query);
 			while(rs.next()){
-				Team newTeam = new Team(rs.getString(1));
+				String teamName = rs.getString(1);
+				Coach headCoach = loadCoachOfTeam(teamName, "head");
+				Coach assistantCoach = loadCoachOfTeam(teamName, "assistant");
+				Team newTeam = new Team(teamName, headCoach, assistantCoach);
 				teams.add(newTeam);
 			}
 		}catch(SQLException e) {
+			System.out.println("loadTeamsOfChampionship generated DatabaseException");
 			throw new DatabaseException(e.getMessage());
 		}
 		return teams;
+	}
+
+	private Coach loadCoachOfTeam(String teamName, String role) throws DatabaseException{
+		Coach coach = null;
+		try {
+			String query = "SELECT name, surname, birthday, nationality " +
+					"FROM coach WHERE team = \"" + teamName + "\" AND role = \"" + role + "\";";
+			ResultSet rs = db.executeQuery(query);
+			if(rs.next()){
+				String coachName = rs.getString(1);
+				String coachSurname = rs.getString(2);
+				LocalDate coachBirthday = rs.getDate(3).toLocalDate();
+				String coachNationality = rs.getString(4);
+				coach = new Coach(coachName, coachSurname, coachBirthday, coachNationality, role);
+			}
+		}catch(SQLException e) {
+			System.out.println("loadCoachOfTeam generated DatabaseException");
+			throw new DatabaseException(e.getMessage());
+		}
+		return coach;
 	}
 
 	@Override
