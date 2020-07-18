@@ -1,31 +1,33 @@
 package gui.management;
 
 import domain.Team;
+import gui.management.buttons.TeamsButtonsFactory;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 public class TeamsPanel extends JPanel implements ActionListener {
 
     private static final Color EXTERNAL_BACKGROUND = new Color(60, 63, 65);
-    private static final Color BUTTON_BACKGROUND = new Color(72, 155, 84);
-    private final Color FOREGROUND = new Color(174, 176, 179);
-    private final Color BUTTON_FOREGROUND = new Color(255, 255, 255);
+    private final Color FOREGROUND = new Color(197, 83, 80);
     private final Font TITLE_FONT = new Font("Times New Roman", Font.BOLD, 30);
 
-
+    private TeamsManagment dialog;
     private JButton addTeamBtn;
+    private JButton closeBtn;
+    private ArrayList<Team> teams;
 
-    public TeamsPanel(String season, ArrayList<Team> teams){
+    public TeamsPanel(TeamsManagment dialog, String season, ArrayList<Team> teams){
 
         super(new BorderLayout());
 
-        String title = "Teams of championship \"" + season + "\"";
+        this.dialog = dialog;
+        this.teams = teams;
+
+        String title = season;
         JLabel titleLabel = new JLabel(title);
         titleLabel.setForeground(FOREGROUND);
         titleLabel.setFont(TITLE_FONT);
@@ -46,21 +48,24 @@ public class TeamsPanel extends JPanel implements ActionListener {
         rightPanel.setBackground(EXTERNAL_BACKGROUND);
         rightPanel.setPreferredSize(new Dimension(30, 400));
 
-        addTeamBtn = new TeamsButton("New Team");
-        addTeamBtn.setBackground(BUTTON_BACKGROUND);
-        addTeamBtn.setForeground(BUTTON_FOREGROUND);
-        addTeamBtn.setFocusPainted(false);
+        addTeamBtn = TeamsButtonsFactory.getButton(TeamsButtonsFactory.NEW_GAME_BUTTON);
+        addTeamBtn.setAlignmentX(CENTER_ALIGNMENT);
         addTeamBtn.addActionListener(this);
+
+        closeBtn = TeamsButtonsFactory.getButton(TeamsButtonsFactory.CLOSE_BUTTON);
+        closeBtn.setAlignmentX(LEFT_ALIGNMENT);
+        closeBtn.addActionListener(this);
 
         FlowLayout buttonsLayout = new FlowLayout();
         buttonsLayout.setVgap(15);
+        buttonsLayout.setHgap(30);
+        buttonsLayout.setAlignment(FlowLayout.CENTER);
         JPanel buttonsPanel = new JPanel(buttonsLayout);
         buttonsPanel.setBackground(EXTERNAL_BACKGROUND);
-        buttonsPanel.setAlignmentX(CENTER_ALIGNMENT);
-        buttonsPanel.setAlignmentY(CENTER_ALIGNMENT);
+        buttonsPanel.add(closeBtn);
         buttonsPanel.add(addTeamBtn);
 
-        TeamsGridPanel teamsGrid = new TeamsGridPanel(teams);
+        TeamsGridPanel teamsGrid = new TeamsGridPanel(dialog, teams);
         JScrollPane centralPanel = new JScrollPane(teamsGrid);
         centralPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         centralPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -77,6 +82,11 @@ public class TeamsPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == addTeamBtn){
             //TODO: implement add team
+            Team emptyTeam = new Team("New Team", null , null);
+            TeamEditing teamEditingDialog = new TeamEditing(dialog, emptyTeam);
+            teamEditingDialog.setVisible(true);
+        }else if(e.getSource() == closeBtn){
+            dialog.dispose();
         }
     }
 }

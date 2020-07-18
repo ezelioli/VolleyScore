@@ -1,36 +1,33 @@
 package gui.management;
 
-import db.DBAccessManager;
-import domain.PlayerInfo;
-import domain.Team;
-import exceptions.DatabaseException;
+import domain.Coach;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
-public class TeamEditing extends JDialog {
+public class EditCoach extends JDialog {
 
-    private Image icon = new ImageIcon("data/images/volleyball.png").getImage();
+    private final Color BACKGROUND = new Color(60, 63, 65);
 
-    public TeamEditing(JDialog owner, Team team){
+    public EditCoach(JDialog owner, Coach coach){
 
         super(owner);
 
         initDialog();
 
-        TeamEditingPanel mainPanel = new TeamEditingPanel(this, team);
+        JPanel mainPanel = new JPanel();
+        mainPanel.setBackground(BACKGROUND);
         setContentPane(mainPanel);
-
     }
 
     private void initDialog(){
         setResizable(false);
         setModal(true);
-        setTitle("Teams Managment");
-        setIconImage(icon);
+        setTitle("Edit Coach");
+        ImageIcon editIcon = new ImageIcon("data/images/edit.png");
+        setIconImage(editIcon.getImage());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        Dimension windowSize = new Dimension(700, 500);
+        Dimension windowSize = new Dimension(500, 500);
         setSize(windowSize);
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         Point centerPoint = ge.getCenterPoint();
@@ -38,4 +35,5 @@ public class TeamEditing extends JDialog {
         int dy = centerPoint.y - windowSize.height / 2;
         setLocation(dx, dy);
     }
+
 }

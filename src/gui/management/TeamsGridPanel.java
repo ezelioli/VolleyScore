@@ -1,26 +1,30 @@
 package gui.management;
 
+import domain.Coach;
 import domain.Team;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class TeamsGridPanel extends JPanel implements MouseListener {
 
     private ArrayList<Team> teams;
+    private JDialog owner;
 
     private final Font TEAMS_FONT = new Font("Times New Roman", Font.PLAIN, 18);
     private final Color BACKGROUND = new Color(43, 43, 44);
     private final Color MOUSEOVER_BACKGROUND = new Color(60, 63, 65);
     private final Color FOREGROUND = new Color(174, 176, 179);
 
-    public TeamsGridPanel(ArrayList<Team> teams){
+    public TeamsGridPanel(JDialog owner, ArrayList<Team> teams){
         super();
 
         this.teams = teams;
+        this.owner = owner;
 
         buildPanel();
     }
@@ -52,7 +56,18 @@ public class TeamsGridPanel extends JPanel implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        if(e.getClickCount() == 2 && ! e.isConsumed()){
+            e.consume();
+            JPanel clickedPanel = (JPanel) e.getSource();
+            JLabel clickedLabel = (JLabel) clickedPanel.getComponent(0);
+            Team selectedTeam = new Team("New Team", null , null);
+            for(Team team : teams){
+                if(team.getName().equals(clickedLabel.getText()))
+                    selectedTeam = team;
+            }
+            TeamEditing teamEditingDialog = new TeamEditing(owner, selectedTeam);
+            teamEditingDialog.setVisible(true);
+        }
     }
 
     @Override
