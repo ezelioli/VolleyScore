@@ -1,36 +1,30 @@
-package gui.management;
-
-import db.DBAccessManager;
-import domain.PlayerInfo;
-import domain.Team;
-import exceptions.DatabaseException;
+package gui.management.players;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
-public class TeamEditing extends JDialog {
+public class EditPlayer extends JDialog {
 
     private Image icon = new ImageIcon("data/images/edit.png").getImage();
+    private final Color BACKGROUND = new Color(60, 63, 65);
 
-    public TeamEditing(JDialog owner, Team team){
-
+    public EditPlayer(JDialog owner){
         super(owner);
 
         initDialog();
 
-        TeamEditingPanel mainPanel = new TeamEditingPanel(this, team);
+        JPanel mainPanel = new JPanel();
+        mainPanel.setBackground(BACKGROUND);
         setContentPane(mainPanel);
-
     }
 
     private void initDialog(){
         setResizable(false);
         setModal(true);
-        setTitle("Teams Managment");
+        setTitle("Edit Player");
         setIconImage(icon);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        Dimension windowSize = new Dimension(800, 700);
+        Dimension windowSize = new Dimension(700, 500);
         setSize(windowSize);
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         Point centerPoint = ge.getCenterPoint();

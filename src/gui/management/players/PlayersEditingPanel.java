@@ -22,7 +22,7 @@ public class PlayersEditingPanel extends JPanel {
 
         loadPlayers(team);
 
-        JPanel playersPanel = new PlayersListPanel(owner, this, players);
+        JScrollPane playersPanel = new PlayersListPanel(owner, this, players);
 
         JPanel editPlayerPanel = new PlayerInfoPanel(owner);
 

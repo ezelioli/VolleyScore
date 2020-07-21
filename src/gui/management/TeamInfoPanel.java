@@ -1,14 +1,18 @@
 package gui.management;
 
 import domain.Team;
+import gui.management.buttons.TeamsButtonsFactory;
+import gui.management.players.EditPlayer;
 import gui.management.players.PlayersEditingPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class TeamInfoPanel extends JPanel implements MouseListener {
+public class TeamInfoPanel extends JPanel implements MouseListener, ActionListener {
 
     private final Color BACKGROUND = new Color(43, 43, 44);
     private final Color MOUSEOVER_BACKGROUND = new Color(60, 63, 65);
@@ -20,6 +24,7 @@ public class TeamInfoPanel extends JPanel implements MouseListener {
 
     private JPanel assistantLabelBackground;
     private JPanel coachLabelBackground;
+    private JButton addPlayerButton;
 
     private Team team;
     private JDialog owner;
@@ -134,8 +139,14 @@ public class TeamInfoPanel extends JPanel implements MouseListener {
         rightPanel.setBackground(BACKGROUND);
         rightPanel.setPreferredSize(new Dimension(15, 300));
 
-        JPanel southPanel = new JPanel();
+        addPlayerButton = TeamsButtonsFactory.getButton(TeamsButtonsFactory.ADD_PLAYER_BUTTON);
+        addPlayerButton.addActionListener(this);
+        FlowLayout southPanelLayout = new FlowLayout();
+        southPanelLayout.setAlignment(FlowLayout.LEFT);
+        southPanelLayout.setHgap(15);
+        JPanel southPanel = new JPanel(southPanelLayout);
         southPanel.setBackground(BACKGROUND);
+        southPanel.add(addPlayerButton);
 
         JPanel centralPanel = new PlayersEditingPanel(owner, team);
 
@@ -179,5 +190,13 @@ public class TeamInfoPanel extends JPanel implements MouseListener {
     public void mouseExited(MouseEvent e) {
         JPanel panel = (JPanel) e.getSource();
         panel.setBackground(BACKGROUND);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == addPlayerButton){
+            EditPlayer editPlayerDialog = new EditPlayer(owner);
+            editPlayerDialog.setVisible(true);
+        }
     }
 }
