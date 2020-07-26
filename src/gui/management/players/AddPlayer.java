@@ -1,13 +1,14 @@
 package gui.management.players;
 
 import domain.PlayerInfo;
+import gui.management.TeamManagementOkCancelDialog;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class EditPlayer extends JDialog implements ActionListener {
+public class AddPlayer extends JDialog implements ActionListener {
 
     private Image icon = new ImageIcon("data/images/edit.png").getImage();
     private final Color BACKGROUND = new Color(60, 63, 65);
@@ -16,20 +17,24 @@ public class EditPlayer extends JDialog implements ActionListener {
     private final Font TITLE_FONT = new Font("Times New Roman", Font.BOLD, 30);
     private final String[] ROLES = new String[] {"setter", "spiker", "opposite", "middle-blocker", "libero"};
 
-    private JButton saveButton;
-    private JButton cancelButton;
-    private EditPlayerTextField numberTxt;
-    private EditPlayerTextField nameTxt;
-    private EditPlayerTextField surnameTxt;
-    private EditPlayerTextField birthdayTxt;
-    private EditPlayerTextField nationalityTxt;
-    private JComboBox<String> rolesBox;
+    protected JButton saveButton;
+    protected JButton cancelButton;
+    protected EditPlayerTextField numberTxt;
+    protected EditPlayerTextField nameTxt;
+    protected EditPlayerTextField surnameTxt;
+    protected EditPlayerTextField birthdayTxt;
+    protected EditPlayerTextField nationalityTxt;
+    protected JComboBox<String> rolesBox;
+
+    private JDialog owner;
 
     private PlayerInfo player;
 
-    public EditPlayer(JDialog owner){
+    public AddPlayer(JDialog owner){
 
         super(owner);
+
+        this.owner = owner;
 
         initDialog();
 
@@ -88,17 +93,12 @@ public class EditPlayer extends JDialog implements ActionListener {
         setContentPane(mainPanel);
     }
 
-    public EditPlayer(JDialog owner, PlayerInfo player){
-        this(owner);
-        this.player = player;
-    }
-
     private void initDialog(){
         setResizable(false);
         setModal(true);
         setTitle("Edit Player");
         setIconImage(icon);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         Dimension windowSize = new Dimension(560, 670);
         setSize(windowSize);
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -185,6 +185,12 @@ public class EditPlayer extends JDialog implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if(e.getSource() == saveButton){
+            //TODO: implement save new player and exit
+        }else if(e.getSource() == cancelButton){
+            String message = "Exit without saving?";
+            EditPlayerOkCancelDialog confirmDialog = new EditPlayerOkCancelDialog(this, message);
+            confirmDialog.setVisible(true);
+        }
     }
 }

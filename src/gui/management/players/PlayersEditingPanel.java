@@ -14,6 +14,9 @@ public class PlayersEditingPanel extends JPanel {
     private JDialog owner;
     private ArrayList<PlayerInfo> players;
 
+    private PlayerInfoPanel playerInfoPanel;
+    private JPanel playersPanel;
+
     public PlayersEditingPanel(JDialog owner, Team team){
 
         super(new GridLayout(1, 2));
@@ -22,12 +25,15 @@ public class PlayersEditingPanel extends JPanel {
 
         loadPlayers(team);
 
-        JScrollPane playersPanel = new PlayersListPanel(owner, this, players);
+        playerInfoPanel = new PlayerInfoPanel(owner);
 
-        JPanel editPlayerPanel = new PlayerInfoPanel(owner);
+        playersPanel = new PlayersListPanel(owner, this, players, playerInfoPanel);
+        JScrollPane leftPanel = new JScrollPane(playersPanel);
+        leftPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        leftPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-        add(playersPanel, 0);
-        add(editPlayerPanel, 1);
+        add(leftPanel, 0);
+        add(playerInfoPanel, 1);
     }
 
     private void loadPlayers(Team team){
@@ -41,5 +47,4 @@ public class PlayersEditingPanel extends JPanel {
             System.out.println("No players found for team " + team.getName());
         }
     }
-
 }

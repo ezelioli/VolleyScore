@@ -1,4 +1,7 @@
 package gui.management.players;
 
-public class EditPlayerTextField {
+public class EditPlayerTextField extends PlayerInfoTextField {
+    public EditPlayerTextField(){
+        setEditable(true);
+    }
 }

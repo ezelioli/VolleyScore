@@ -17,6 +17,10 @@ public class RowPanel extends JPanel {
     private JPanel namePanel;
     private JPanel rolePanel;
 
+    private JLabel numberLabel;
+    private JLabel playerName;
+    private JLabel roleLabel;
+
     private boolean selected = false;
     private PlayerInfo player;
 
@@ -31,33 +35,36 @@ public class RowPanel extends JPanel {
         rowElementLayout.setVgap(15);
         rowElementLayout.setAlignment(FlowLayout.CENTER);
 
-        JLabel numberLabel = new JLabel(Integer.toString(player.getNumber()));
+        numberLabel = new JLabel(Integer.toString(player.getNumber()));
         numberLabel.setForeground(FOREGROUND);
         numberLabel.setFont(FONT);
         numberLabel.setHorizontalAlignment(JLabel.CENTER);
         numberLabel.setVerticalAlignment(JLabel.CENTER);
         numberLabel.setPreferredSize(new Dimension(30, 20));
+
         numberPanel = new JPanel(rowElementLayout);
         numberPanel.setSize(20, 20);
         numberPanel.setBackground(BACKGROUND);
         numberPanel.add(numberLabel);
 
         String fullPlayerName = player.getName() + " " + player.getSurname().toUpperCase();
-        JLabel playerName = new JLabel(fullPlayerName);
+        playerName = new JLabel(fullPlayerName);
         playerName.setBackground(BACKGROUND);
         playerName.setForeground(FOREGROUND);
         playerName.setFont(FONT);
         playerName.setHorizontalAlignment(JLabel.CENTER);
         playerName.setVerticalAlignment(JLabel.CENTER);
+
         namePanel = new JPanel(rowElementLayout);
         namePanel.setBackground(BACKGROUND);
         namePanel.add(playerName);
 
-        JLabel roleLabel = new JLabel(player.getRole());
+        roleLabel = new JLabel(player.getRole());
         roleLabel.setHorizontalAlignment(JLabel.CENTER);
         roleLabel.setVerticalAlignment(JLabel.CENTER);
         roleLabel.setFont(FONT);
         roleLabel.setForeground(FOREGROUND);
+
         rolePanel = new JPanel(rowElementLayout);
         rolePanel.setBackground(BACKGROUND);
         rolePanel.add(roleLabel);
@@ -92,5 +99,13 @@ public class RowPanel extends JPanel {
 
     public PlayerInfo getPlayer(){
         return player;
+    }
+
+    public void setPlayer(PlayerInfo player){
+        this.player = player;
+        numberLabel.setText(Integer.toString(player.getNumber()));
+        String fullPlayerName = player.getName() + " " + player.getSurname().toUpperCase();
+        playerName.setText(fullPlayerName);
+        roleLabel.setText(player.getRole());
     }
 }

@@ -8,90 +8,90 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-public class PlayersListPanel extends JScrollPane implements MouseListener {
+public class PlayersListPanel extends JPanel implements MouseListener {
 
     private JDialog owner;
     private PlayersEditingPanel mainPanel;
+    private  PlayerInfoPanel playerInfoPanel;
     private ArrayList<PlayerInfo> players;
 
     private final Color BACKGROUND = new Color(60, 63, 65);
-    private final Color MOUSEOVER_BACKGROUND = new Color(74, 78, 80);
-    private final Color FOREGROUND = new Color(174, 176, 179);
-    private final Font FONT = new Font("Times New Roman", Font.PLAIN, 18);
+    private ArrayList<RowPanel> rowPanels;
 
-    public PlayersListPanel(JDialog owner, PlayersEditingPanel mainPanel, ArrayList<PlayerInfo> players){
+    public PlayersListPanel(JDialog owner, PlayersEditingPanel mainPanel, ArrayList<PlayerInfo> players, PlayerInfoPanel playerInfoPanel){
 
         super();
 
         this.owner = owner;
         this.mainPanel = mainPanel;
-        this.players = players;
+        this.playerInfoPanel = playerInfoPanel;
+        this.players = sortPlayersByName(players);
 
         buildPanel();
-        setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
     }
 
     private void buildPanel(){
-        JPanel gridPanel = new JPanel();
         int gridRows = Math.max(players.size(), 10);
-        gridPanel.setLayout(new GridLayout(gridRows, 1));
-        gridPanel.setBackground(BACKGROUND);
+        setLayout(new GridLayout(gridRows, 1));
+        setBackground(BACKGROUND);
+        rowPanels = new ArrayList<RowPanel>();
         for(int i = 0; i < gridRows; ++i){
             if(i < players.size()){
-                JLabel numberLabel = new JLabel(Integer.toString(players.get(i).getNumber()));
-                numberLabel.setForeground(FOREGROUND);
-                numberLabel.setFont(FONT);
-                numberLabel.setHorizontalAlignment(JLabel.CENTER);
-                numberLabel.setVerticalAlignment(JLabel.CENTER);
-                numberLabel.setPreferredSize(new Dimension(30, 20));
-                JPanel numberPanel = new JPanel();
-                numberPanel.setSize(20, 20);
-                numberPanel.setBackground(BACKGROUND);
-                numberPanel.add(numberLabel);
-
-                String fullPlayerName = players.get(i).getName() + " " + players.get(i).getSurname().toUpperCase();
-                JLabel playerName = new JLabel(fullPlayerName);
-                playerName.setBackground(BACKGROUND);
-                playerName.setForeground(FOREGROUND);
-                playerName.setFont(FONT);
-                playerName.setHorizontalAlignment(JLabel.CENTER);
-                playerName.setVerticalAlignment(JLabel.CENTER);
-                JPanel playerPanel = new JPanel();
-                playerPanel.setBackground(BACKGROUND);
-                playerPanel.addMouseListener(this);
-                playerPanel.add(playerName);
-
-                JLabel roleLabel = new JLabel(players.get(i).getRole());
-                roleLabel.setHorizontalAlignment(JLabel.CENTER);
-                roleLabel.setVerticalAlignment(JLabel.CENTER);
-                roleLabel.setFont(FONT);
-                roleLabel.setForeground(FOREGROUND);
-                JPanel rolePanel = new JPanel();
-                rolePanel.setBackground(BACKGROUND);
-                rolePanel.add(roleLabel);
-
-                JPanel rowPanel = new JPanel(new GridLayout(1, 3));
-                rowPanel.add(numberPanel, 0);
-                rowPanel.add(playerPanel, 1);
-                rowPanel.add(rolePanel, 2);
-                gridPanel.add(rowPanel, i);
+                RowPanel rowPanel = new RowPanel(players.get(i));
+                rowPanel.addMouseListener(this);
+                if(i == 0){
+                    rowPanel.setSelected(true);
+                    playerInfoPanel.showPlayerInfo(rowPanel.getPlayer());
+                }
+                rowPanels.add(rowPanel);
+                add(rowPanel, i);
             }else{
                 JPanel emptyPanel = new JPanel();
                 emptyPanel.setBackground(BACKGROUND);
-                gridPanel.add(emptyPanel, i);
+
+                add(emptyPanel, i);
             }
         }
-        setViewportView(gridPanel);
+    }
+
+    public void updatePanel(){
+        for(int i = 0; i < players.size(); ++i){
+            rowPanels.get(i).setPlayer(players.get(i));
+            if(rowPanels.get(i).isSelected()){
+                playerInfoPanel.showPlayerInfo(players.get(i));
+            }
+        }
+    }
+
+    private ArrayList<PlayerInfo> sortPlayersByName(ArrayList<PlayerInfo> players){
+        ArrayList<PlayerInfo> sortedPlayers = new ArrayList<PlayerInfo>();
+        while(sortedPlayers.size() < players.size()){
+            PlayerInfo next = null;
+            for(PlayerInfo player : players){
+                if(! sortedPlayers.contains(player) && (next == null || player.getSurname().compareToIgnoreCase(next.getSurname()) < 0)){
+                    next = player;
+                }
+            }
+            sortedPlayers.add(next);
+        }
+        return sortedPlayers;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        //TODO: implement show selected player info
         if(e.getClickCount() == 2 && ! e.isConsumed()){
             e.consume();
-            EditPlayer editPlayerDialog = new EditPlayer(owner);
+            RowPanel source = (RowPanel) e.getSource();
+            EditPlayer editPlayerDialog = new EditPlayer(owner, source.getPlayer(), this);
             editPlayerDialog.setVisible(true);
+        }else if(e.getClickCount() == 1 && ! e.isConsumed()){
+            e.consume();
+            RowPanel source = (RowPanel) e.getSource();
+            for(RowPanel panel : rowPanels){
+                panel.setSelected(false);
+            }
+            source.setSelected(true);
+            playerInfoPanel.showPlayerInfo(source.getPlayer());
         }
     }
 
@@ -107,13 +107,17 @@ public class PlayersListPanel extends JScrollPane implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        JPanel source = (JPanel) e.getSource();
-        source.setBackground(MOUSEOVER_BACKGROUND);
+        RowPanel source = (RowPanel) e.getSource();
+        if(!source.isSelected()) {
+            source.setBackground(RowPanel.MOUSEOVER_BACKGROUND);
+        }
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        JPanel source = (JPanel) e.getSource();
-        source.setBackground(BACKGROUND);
+        RowPanel source = (RowPanel) e.getSource();
+        if(!source.isSelected()){
+            source.setBackground(RowPanel.BACKGROUND);
+        }
     }
 }

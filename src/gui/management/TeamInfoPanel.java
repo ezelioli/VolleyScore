@@ -2,7 +2,7 @@ package gui.management;
 
 import domain.Team;
 import gui.management.buttons.TeamsButtonsFactory;
-import gui.management.players.EditPlayer;
+import gui.management.players.AddPlayer;
 import gui.management.players.PlayersEditingPanel;
 
 import javax.swing.*;
@@ -25,6 +25,7 @@ public class TeamInfoPanel extends JPanel implements MouseListener, ActionListen
     private JPanel assistantLabelBackground;
     private JPanel coachLabelBackground;
     private JButton addPlayerButton;
+    private JButton editPlayerButton;
 
     private Team team;
     private JDialog owner;
@@ -141,12 +142,16 @@ public class TeamInfoPanel extends JPanel implements MouseListener, ActionListen
 
         addPlayerButton = TeamsButtonsFactory.getButton(TeamsButtonsFactory.ADD_PLAYER_BUTTON);
         addPlayerButton.addActionListener(this);
+        editPlayerButton = TeamsButtonsFactory.getButton(TeamsButtonsFactory.EDIT_PLAYER_BUTTON);
+        editPlayerButton.addActionListener(this);
+
         FlowLayout southPanelLayout = new FlowLayout();
         southPanelLayout.setAlignment(FlowLayout.LEFT);
         southPanelLayout.setHgap(15);
         JPanel southPanel = new JPanel(southPanelLayout);
         southPanel.setBackground(BACKGROUND);
         southPanel.add(addPlayerButton);
+        southPanel.add(editPlayerButton);
 
         JPanel centralPanel = new PlayersEditingPanel(owner, team);
 
@@ -195,8 +200,8 @@ public class TeamInfoPanel extends JPanel implements MouseListener, ActionListen
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == addPlayerButton){
-            EditPlayer editPlayerDialog = new EditPlayer(owner);
-            editPlayerDialog.setVisible(true);
+            AddPlayer addPlayerDialog = new AddPlayer(owner);
+            addPlayerDialog.setVisible(true);
         }
     }
 }

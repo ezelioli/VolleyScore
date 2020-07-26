@@ -1,13 +1,9 @@
 package gui.management;
 
-import db.DBAccessManager;
-import domain.PlayerInfo;
 import domain.Team;
-import exceptions.DatabaseException;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class TeamEditing extends JDialog {
 
@@ -29,8 +25,8 @@ public class TeamEditing extends JDialog {
         setModal(true);
         setTitle("Teams Managment");
         setIconImage(icon);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        Dimension windowSize = new Dimension(800, 700);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        Dimension windowSize = new Dimension(1000, 800);
         setSize(windowSize);
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         Point centerPoint = ge.getCenterPoint();
